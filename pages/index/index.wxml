@@ -1,0 +1,7 @@
+<!--index.wxml-->
+<view class="homepage">
+<map id="myMap" longitude="{{point.longitude}}" latitude="{{point.latitude}}" markers="{{markers}}" scale="{{mapScale}}" show-location  bindmarkertap="markertap" controls="{{controls}}" bindcontroltap="controltap" style="width: {{mapWidth}}; height: {{mapHeight}};top: {{mapTop}}"> 
+ 
+<cover-image class="{{showView?'img':'hide'}}" src="../../images/shiyong3.jpg" bindtap='closeTip' />
+</map>
+</view>

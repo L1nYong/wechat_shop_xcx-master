@@ -1,0 +1,31 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/product/detail",
+    "pages/search/search",
+    "pages/user/user",
+  
+    "pages/user/dingdan",
+    "pages/user/tuihuo",
+    "pages/order/pay",
+    "pages/order/detail",
+    "pages/order/downline",
+    "pages/cart/cart",
+    "pages/listdetail/listdetail",
+    "pages/address/address",
+    "pages/address/user-address/user-address",
+    "pages/category/index",     
+    "pages/ritual/ritual",   
+    "pages/rituall/rituall", 
+    "pages/shop_store/shop_store"
+
+
+      ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#232323",
+    "navigationBarTitleText": "161云铺",
+    "navigationBarTextStyle":"white"
+
+  }
+}
