@@ -4,7 +4,7 @@ App({
     hostUrl: 'https://wxplus.paoyeba.com/index.php',
     hostImg: 'http://img.ynjmzb.net',
     hostVideo: 'http://zhubaotong-file.oss-cn-beijing.aliyuncs.com',
-    userId: 1,
+    userId: 0,
     appId:"wx8ff659f06b208707",
     appKey:"",
     ceshiUrl:'https://161store.cn/wechat_shop-master/index.php',
@@ -37,11 +37,37 @@ App({
           //get wx user simple info
           wx.getUserInfo({
             success: function (res) {
+              console.log('success');
               that.globalData.userInfo = res.userInfo
               typeof cb == "function" && cb(that.globalData.userInfo);
               //get user sessionKey
               //get sessionKey
               that.getUserSessionKey(code);
+            },
+            fail: function(res) {
+              // wx.showModal({
+              //   title: '警告',
+              //   content: '您点击了拒绝授权，将无法正常进行购物，点击确定重新获                            取授权。',
+              //   success: function(res) {
+              //     if(res.confirm) {
+              //       wx.openSetting({
+              //         success: (res) => {
+              //           if (res.authSetting['scope.userInfo']) {
+              //             wx.getUserInfo({
+              //               success: function(res) {
+              //                 that.globalData.userInfo = res.userInfo
+              //                 typeof cb == "function" && cb                                               (that.globalData.userInfo);
+              //                 //get user sessionKey
+              //                 //get sessionKey
+              //                 that.getUserSessionKey(code);
+              //               }
+              //             })
+              //           }
+              //         }
+              //       })
+              //     }
+              //   }
+              // })
             }
           });
         }
@@ -50,6 +76,7 @@ App({
   },
 
   getUserSessionKey:function(code){
+    console.log('getUserSessionKey');
     //用户的订单状态
     var that = this;
     wx.request({
@@ -85,6 +112,7 @@ App({
     });
   },
   onLoginUser:function(){
+    console.log('onLoginUser');
     var that = this;
     var user = that.globalData.userInfo;
     wx.request({
@@ -115,6 +143,7 @@ App({
         that.globalData.userInfo['NickName'] = data.NickName;
         that.globalData.userInfo['HeadUrl'] = data.HeadUrl;
         var userId = data.ID;
+        console.log(userId);
         if (!userId){
           wx.showToast({
             title: '登录失败！',
@@ -123,6 +152,7 @@ App({
           return false;
         }
         that.d.userId = userId;
+        console.log(that.d.userId);
       },
       fail:function(e){
         wx.showToast({
