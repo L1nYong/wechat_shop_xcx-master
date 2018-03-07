@@ -130,7 +130,6 @@ Page({
                       success: function (res) {
                         // success
                         var pro_num = res.result;
-                        console.log(pro_num);
                         wx.request({
                           url: app.d.ceshiUrl + '/Api/Product/getProductId',
                           method: 'post',
@@ -219,6 +218,85 @@ Page({
                 }
               })
             }
+          }
+        })
+      } else {
+        wx.scanCode({
+          success: function (res) {
+            // success
+            var pro_num = res.result;
+            console.log(pro_num);
+            wx.request({
+              url: app.d.ceshiUrl + '/Api/Product/getProductId',
+              method: 'post',
+              data: {
+                pro_number: pro_num,
+              },
+              header: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+              },
+              success: function (res) {
+                //--init data 
+                var status = res.data.status;
+                var that = this;
+                if (status == 1) {
+                  var productId = res.data.productId;
+                  wx.request({
+                    url: app.d.ceshiUrl + '/Api/Shopping/add',
+                    method: 'post',
+                    data: {
+                      uid: app.d.userId,
+                      pid: productId,
+                      num: 1,
+                    },
+                    header: {
+                      'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    success: function (res) {
+                      // //--init data
+                      var data = res.data;
+                      if (data.status == 1) {
+                        wx.showToast({
+                          title: '加入成功，点击购物车结算',
+                          icon: 'none',
+                          duration: 2000
+                        })
+                      } else {
+                        wx.showToast({
+                          title: data.err,
+                          icon: 'none',
+                          duration: 2000
+                        });
+                      }
+                    },
+                    fail: function () {
+                      // fail
+                      wx.showToast({
+                        title: '网络异常！',
+                        duration: 2000
+                      });
+                    }
+                  });
+                } else {
+                  wx.showToast({
+                    title: res.data.err,
+                    duration: 2000,
+                  });
+                }
+              },
+              error: function (e) {
+                wx.showToast({
+                  title: '网络异常！',
+                  duration: 2000,
+                });
+              },
+            });
+          },
+          fail: function () {
+            // fail
+          },
+          complete: function () {
+            // complete
           }
         })
       }
@@ -332,6 +410,10 @@ Page({
               })
             }
           }
+        })
+      } else {
+        wx.navigateTo({
+          url: '../cart/cart'
         })
       }
     } else if (id == 15) {
